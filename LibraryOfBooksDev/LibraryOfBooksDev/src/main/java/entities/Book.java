@@ -2,6 +2,9 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import customAnnotations.marker.IsReplicate;
 import entities.Author;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,11 +20,18 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
 	@Setter(AccessLevel.PRIVATE)
-	int id;
+	int id;	
 	@NonNull
 	String name;
 	@NonNull
 	String categoryId;
 	@NonNull
 	List<Author> authors = new ArrayList<>();
+	@IsReplicate
+	public Book(@NonNull Book b) {
+		this.categoryId = b.categoryId;
+		this.id = b.id;
+		this.name = b.name;
+		this.authors = b.authors.stream().map(x->new Author(x)).collect(Collectors.toList());
+	}
 }

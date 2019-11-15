@@ -1,5 +1,6 @@
 package entities;
 
+import customAnnotations.marker.IsReplicate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +20,10 @@ public abstract class Account {
 	String firstname;
 	@NonNull
 	String lastname;
+	@IsReplicate
+	public Account(@NonNull Account a) {
+		this.firstname = a.firstname;
+		this.id = a.id;
+		this.lastname = a.lastname;
+	}
 }
