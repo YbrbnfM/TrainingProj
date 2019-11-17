@@ -25,10 +25,13 @@ public class Book {
 	String name;
 	@NonNull
 	String categoryId;
+	@Setter(AccessLevel.PRIVATE)
+	boolean isAvailable;
 	@NonNull
 	List<Author> authors = new ArrayList<>();
 	@IsReplicate
 	public Book(@NonNull Book b) {
+		this.isAvailable = b.isAvailable;
 		this.categoryId = b.categoryId;
 		this.id = b.id;
 		this.name = b.name;

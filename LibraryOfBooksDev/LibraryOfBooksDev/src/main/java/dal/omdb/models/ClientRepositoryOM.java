@@ -12,54 +12,57 @@ import org.apache.logging.log4j.Logger;
 
 import dal.Repositorable;
 import dal.omdb.OMDataBase;
-import entities.Book;
+import entities.Client;
 import lombok.NonNull;
 
-public class BookRepositoryOM implements Repositorable<Book> {
+public class ClientRepositoryOM implements Repositorable<Client> {
 	private final Logger log = LogManager.getLogger();
 	private OMDataBase db = OMDataBase.getInstance();
-	private List<Book> cachedLink = db.getBooks();
-	
+	private List<Client> cachedLink = db.getClients();
+
 	@Override
-	public Book get(int id) throws NoSuchElementException{
-		return cachedLink.stream().filter(x->x.getId()==id).findAny().get();
+	public Client get(int id) throws NoSuchElementException {
+		return cachedLink.stream().filter(x -> x.getId() == id).findAny().get();
 	}
 
 	@Override
-	public List<Book> get(@NonNull Predicate<Book> p){
+	public List<Client> get(@NonNull Predicate<Client> p) {
 		return cachedLink.stream().filter(p).collect(Collectors.toList());
 	}
 
 	@Override
-	public void create(@NonNull Book element) {
+	public void create(@NonNull Client element) {
 		db.generateId(element);
 		cachedLink.add(element);
 	}
-	
+
 	@Override
-	public Book delete(int id) throws NoSuchElementException{
-		Optional<Book> tmpOptional = cachedLink.stream().filter(x -> x.getId() == id).findAny();
+	public Client delete(int id) throws NoSuchElementException {
+		Optional<Client> tmpOptional = cachedLink.stream().filter(x -> x.getId() == id).findAny();
 		cachedLink.remove(tmpOptional.get());
 		return tmpOptional.get();
 	}
 
 	@Override
-	public List<Book> delete(@NonNull Predicate<Book> p) {
-		List<Book> remElements = new ArrayList<>();
+	public List<Client> delete(@NonNull Predicate<Client> p) {
+		List<Client> remElements = new ArrayList<>();
 		cachedLink.stream().filter(p).forEach(x -> remElements.add(delete(x.getId())));
 		return remElements;
 	}
 
 	@Override
-	public void update(@NonNull Book element) {
-		// db.update(element, db.getBooks());
+	public void update(@NonNull Client element) {
+		//db.update(element, cachedLink);
 		try {
-			Book findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
-			cachedLink.set(cachedLink.indexOf(findedElement), element);
+			Client findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
+			cachedLink.set(cachedLink.indexOf(findedElement),element);
 		} catch (NoSuchElementException nsee) {
 			cachedLink.add(element);
 			log.warn("Updated element does not exist, but was re-created");
 		}
+		
+		
+
 	}
 
 }
