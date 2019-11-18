@@ -22,18 +22,18 @@ public class ClientRepositoryOM implements Repositorable<Client> {
 
 	@Override
 	public Client get(int id) throws NoSuchElementException {
-		return cachedLink.stream().filter(x -> x.getId() == id).findAny().get();
+		return new Client(cachedLink.stream().filter(x -> x.getId() == id).findAny().get());
 	}
 
 	@Override
 	public List<Client> get(@NonNull Predicate<Client> p) {
-		return cachedLink.stream().filter(p).collect(Collectors.toList());
+		return cachedLink.stream().filter(p).map(x -> new Client(x)).collect(Collectors.toList());
 	}
 
 	@Override
 	public void create(@NonNull Client element) {
 		db.generateId(element);
-		cachedLink.add(element);
+		cachedLink.add(new Client(element));
 	}
 
 	@Override
@@ -51,18 +51,14 @@ public class ClientRepositoryOM implements Repositorable<Client> {
 	}
 
 	@Override
-	public void update(@NonNull Client element) {
-		//db.update(element, cachedLink);
-		try {
-			Client findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
-			cachedLink.set(cachedLink.indexOf(findedElement),element);
-		} catch (NoSuchElementException nsee) {
-			cachedLink.add(element);
-			log.warn("Updated element does not exist, but was re-created");
-		}
-		
-		
-
+	public void update(@NonNull Client element) throws NoSuchElementException {
+		// db.update(element, cachedLink);
+//		try {
+		Client findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
+		cachedLink.set(cachedLink.indexOf(findedElement), element);
+//		} catch (NoSuchElementException nsee) {
+//			cachedLink.add(element);
+//			log.warn("Updated element does not exist, but was re-created");
+//		}
 	}
-
 }

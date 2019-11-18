@@ -22,18 +22,18 @@ public class AccountingRecordRepositoryOM implements Repositorable<AccountingRec
 
 	@Override
 	public AccountingRecord get(int id) throws NoSuchElementException {
-		return cachedLink.stream().filter(x -> x.getId() == id).findAny().get();
+		return new AccountingRecord(cachedLink.stream().filter(x -> x.getId() == id).findAny().get());
 	}
 
 	@Override
 	public List<AccountingRecord> get(@NonNull Predicate<AccountingRecord> p) {
-		return cachedLink.stream().filter(p).collect(Collectors.toList());
+		return cachedLink.stream().filter(p).map(x->new AccountingRecord(x)).collect(Collectors.toList());
 	}
 
 	@Override
 	public void create(@NonNull AccountingRecord element) {
 		db.generateId(element);
-		cachedLink.add(element);
+		cachedLink.add(new AccountingRecord(element));
 	}
 
 	@Override
@@ -51,16 +51,16 @@ public class AccountingRecordRepositoryOM implements Repositorable<AccountingRec
 	}
 
 	@Override
-	public void update(@NonNull AccountingRecord element) {
+	public void update(@NonNull AccountingRecord element) throws NoSuchElementException {
 		// db.update(element, db.getAccountingRecords());
-		try {
+//		try {
 			AccountingRecord findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny()
 					.get();
 			cachedLink.set(cachedLink.indexOf(findedElement), element);
-		} catch (NoSuchElementException nsee) {
-			cachedLink.add(element);
-			log.warn("Updated element does not exist, but was re-created");
-		}
+//		} catch (NoSuchElementException nsee) {
+//			cachedLink.add(element);
+//			log.warn("Updated element does not exist, but was re-created");
+//		}
 
 	}
 

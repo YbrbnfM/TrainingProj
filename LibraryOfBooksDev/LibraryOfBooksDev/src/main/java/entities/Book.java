@@ -20,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
 	@Setter(AccessLevel.PRIVATE)
-	int id;	
+	int id;
 	@NonNull
 	String name;
 	@NonNull

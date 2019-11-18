@@ -19,25 +19,25 @@ public class BookRepositoryOM implements Repositorable<Book> {
 	private final Logger log = LogManager.getLogger();
 	private OMDataBase db = OMDataBase.getInstance();
 	private List<Book> cachedLink = db.getBooks();
-	
+
 	@Override
-	public Book get(int id) throws NoSuchElementException{
-		return cachedLink.stream().filter(x->x.getId()==id).findAny().get();
+	public Book get(int id) throws NoSuchElementException {
+		return new Book(cachedLink.stream().filter(x -> x.getId() == id).findAny().get());
 	}
 
 	@Override
-	public List<Book> get(@NonNull Predicate<Book> p){
-		return cachedLink.stream().filter(p).collect(Collectors.toList());
+	public List<Book> get(@NonNull Predicate<Book> p) {
+		return cachedLink.stream().filter(p).map(x -> new Book(x)).collect(Collectors.toList());
 	}
 
 	@Override
 	public void create(@NonNull Book element) {
 		db.generateId(element);
-		cachedLink.add(element);
+		cachedLink.add(new Book(element));
 	}
-	
+
 	@Override
-	public Book delete(int id) throws NoSuchElementException{
+	public Book delete(int id) throws NoSuchElementException {
 		Optional<Book> tmpOptional = cachedLink.stream().filter(x -> x.getId() == id).findAny();
 		cachedLink.remove(tmpOptional.get());
 		return tmpOptional.get();
@@ -51,15 +51,15 @@ public class BookRepositoryOM implements Repositorable<Book> {
 	}
 
 	@Override
-	public void update(@NonNull Book element) {
+	public void update(@NonNull Book element) throws NoSuchElementException {
 		// db.update(element, db.getBooks());
-		try {
-			Book findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
-			cachedLink.set(cachedLink.indexOf(findedElement), element);
-		} catch (NoSuchElementException nsee) {
-			cachedLink.add(element);
-			log.warn("Updated element does not exist, but was re-created");
-		}
+//		try {
+		Book findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
+		cachedLink.set(cachedLink.indexOf(findedElement), element);
+//		} catch (NoSuchElementException nsee) {
+//			cachedLink.add(element);
+//			log.warn("Updated element does not exist, but was re-created");
+//		}
 	}
 
 }
