@@ -1,5 +1,5 @@
-package pl.console.controllers;
+package pl.controllers;
 
 public class MainController {
-
+	
 }
