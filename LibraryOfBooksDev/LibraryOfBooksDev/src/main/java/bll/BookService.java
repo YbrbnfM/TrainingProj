@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.apache.maven.plugin.descriptor.DuplicateParameterException;
 import bll.config.Repositories;
 import dal.Repositorable;
 import entities.AccountingRecord;
@@ -18,16 +17,20 @@ public class BookService {
 	Repositorable<AccountingRecord> arRepositorable = (Repositorable<AccountingRecord>) Repositories.ACCOUNTING_RECORD_REPOSITORY
 			.getValue();
 
-	public void create(@NonNull Book c) throws DuplicateParameterException {
+	public void create(@NonNull Book c) throws IllegalArgumentException/* throws DuplicateParameterException */ {
+		if (c.getCategory() == null || c.getAuthors().size() == 0)
+			throw new IllegalArgumentException("Not all data is filled");
 		// clientRepositorable.create(c);
-		if (bookRepositorable.get(x -> x.getName() == c.getName() && x.getCategoryId() == c.getCategoryId()
-				&& x.getAuthors().containsAll(c.getAuthors())).isEmpty()) // проверить выполнение последнего условия
-			bookRepositorable.create(c);
-		else
-			throw new DuplicateParameterException("Such book is already exist");
+//		if (bookRepositorable.get(x -> x.getName() == c.getName() && x.getCategoryId() == c.getCategoryId()
+//				&& x.getAuthors().containsAll(c.getAuthors())).isEmpty()) // проверить выполнение последнего условия
+		bookRepositorable.create(c);
+//		else
+//			throw new DuplicateParameterException("Such book is already exist");
 	}
 
 	public void update(@NonNull Book c) throws IllegalArgumentException {
+		if (c.getCategory() == null || c.getAuthors().size() == 0)
+			throw new IllegalArgumentException("Not all data is filled");
 		if (c.getId() == 0)
 			throw new IllegalArgumentException("ID can't be 0");
 		try {

@@ -22,4 +22,8 @@ public class Author extends Account {
 		super(a);
 	}
 	
+	@Override
+	public String toString() {
+		return new String("id: "+id+"\t"+firstname+" "+lastname);
+	}
 }

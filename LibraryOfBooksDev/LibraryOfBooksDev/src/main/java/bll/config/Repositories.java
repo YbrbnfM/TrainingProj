@@ -1,9 +1,9 @@
 package bll.config;
 
 import dal.Repositorable;
-import dal.omdb.models.AccountingRecordRepositoryOM;
-import dal.omdb.models.BookRepositoryOM;
-import dal.omdb.models.ClientRepositoryOM;
+import dal.omdb.AccountingRecordRepositoryOM;
+import dal.omdb.BookRepositoryOM;
+import dal.omdb.ClientRepositoryOM;
 import lombok.Getter;
 
 public enum Repositories{
