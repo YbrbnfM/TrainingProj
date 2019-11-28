@@ -18,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Book {
+public class Book implements Editable {
 	@Setter(AccessLevel.PRIVATE)
 	int id;
 	@NonNull

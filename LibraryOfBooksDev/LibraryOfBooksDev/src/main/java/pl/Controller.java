@@ -1,11 +1,15 @@
 package pl;
 
+import java.util.List;
 import java.util.function.Predicate;
+import lombok.NonNull;
 
-public interface Controller<T extends Model> {
+public interface Controller<T> {
 	public T get(int id);
-	public T get(Predicate<?> p);
-	public void put(T t);
-	public void post(T t);
+	public List<T> get(@NonNull Predicate<?> p);
+	public void put(@NonNull T t);
+	public void put(@NonNull String t);
+	public void post(@NonNull T t);
+	public void post(@NonNull String t);
 	public void delete(int id);
 }

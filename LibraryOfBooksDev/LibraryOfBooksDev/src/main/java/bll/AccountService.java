@@ -9,6 +9,7 @@ import org.apache.maven.plugin.descriptor.DuplicateParameterException;
 import bll.config.Repositories;
 import dal.Repositorable;
 import entities.Client;
+import entities.StatusAR;
 import entities.AccountingRecord;
 import entities.Book;
 import lombok.AccessLevel;
@@ -87,7 +88,7 @@ public class AccountService {
 		if (ar.getReceiptDate().getTime() >= ar.getReturnDate().getTime()
 				|| ar.getReturnDate().getTime() <= new Date().getTime())
 			throw new IllegalArgumentException("now/receiptDate >= returnDate");
-		if (!arRepositorable.get(x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId()).isEmpty())
+		if (!arRepositorable.get(x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId()&&x.getStatusId()==StatusAR.OPENED).isEmpty())
 			throw new DuplicateParameterException("Such accountRecord is already exist");
 		if(!arRepositorable.get(x->x.getBookId()==b.getId()).isEmpty())
 			throw new IllegalArgumentException("This book is not free");
@@ -98,9 +99,24 @@ public class AccountService {
 		return arRepositorable.get(p);
 	}
 
-	public void updateAccountRecord(AccountingRecord ar) {
+	public void updateAccountRecord(AccountingRecord ar) throws IllegalArgumentException, DuplicateParameterException {
 		if (ar.getId() == 0)
 			throw new IllegalArgumentException("ID can't be 0");
+		Client c;
+		Book b;
+		try {
+			c = clientRepositorable.get(ar.getAccountId());
+			b = bookRepositorable.get(ar.getBookId());
+		} catch (NoSuchElementException e) {
+			throw new IllegalArgumentException("Such book or client does not exist");
+		}
+		if (ar.getReceiptDate().getTime() >= ar.getReturnDate().getTime()
+				|| ar.getReturnDate().getTime() <= new Date().getTime())
+			throw new IllegalArgumentException("now/receiptDate >= returnDate");
+		if (!arRepositorable.get(x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId()&&x.getStatusId()==StatusAR.OPENED).isEmpty())
+			throw new DuplicateParameterException("Such accountRecord is already exist");
+		if(!arRepositorable.get(x->x.getBookId()==b.getId()).isEmpty())
+			throw new IllegalArgumentException("This book is not free");
 		try {
 			arRepositorable.update(ar);
 		} catch (NoSuchElementException e) {

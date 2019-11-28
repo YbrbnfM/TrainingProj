@@ -16,17 +16,21 @@ import lombok.experimental.FieldDefaults;
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode (callSuper = true)
-public class Client extends Account {	
+@EqualsAndHashCode(callSuper = true)
+public class Client extends Account implements Editable {
 	@NonNull
 	List<AccountingRecord> accountingRecords = new ArrayList<>();
-	public Client(int id, @NonNull String firstname, @NonNull String lastname, @NonNull List<AccountingRecord> accountingRecords) {
-		super(id,firstname,lastname);
-		setAccountingRecords(accountingRecords);		
+
+	public Client(int id, @NonNull String firstname, @NonNull String lastname,
+			@NonNull List<AccountingRecord> accountingRecords) {
+		super(id, firstname, lastname);
+		setAccountingRecords(accountingRecords);
 	}
+
 	@IsReplicate
 	public Client(@NonNull Client c) {
 		super(c);
-		this.accountingRecords = c.accountingRecords.stream().map(x->new AccountingRecord(x)).collect(Collectors.toList());
+		this.accountingRecords = c.accountingRecords.stream().map(x -> new AccountingRecord(x))
+				.collect(Collectors.toList());
 	}
 }

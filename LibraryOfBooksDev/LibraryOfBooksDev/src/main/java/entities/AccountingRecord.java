@@ -6,27 +6,16 @@ import customAnnotations.marker.IsReplicate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-enum StatusAR{
-	OPENED("Opened"),
-	CLOSED("Closed");
-	@Getter
-	private String value;
-	private StatusAR(String value) {
-		this.value = value;
-	}
-}
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountingRecord {
+public class AccountingRecord implements Editable {
 	@Setter(AccessLevel.PRIVATE)
 	int id;
 	@Setter(AccessLevel.PRIVATE)
@@ -39,13 +28,14 @@ public class AccountingRecord {
 	Date returnDate;
 	@NonNull
 	StatusAR statusId = StatusAR.OPENED;
+
 	@IsReplicate
 	public AccountingRecord(AccountingRecord ar) {
 		this.id = ar.id;
 		this.accountId = ar.accountId;
 		this.bookId = ar.bookId;
-		this.receiptDate = (Date)ar.receiptDate.clone();
-		this.returnDate = (Date)ar.returnDate.clone();
+		this.receiptDate = (Date) ar.receiptDate.clone();
+		this.returnDate = (Date) ar.returnDate.clone();
 		this.statusId = ar.statusId;
 	}
 }

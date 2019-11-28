@@ -20,13 +20,19 @@ public class OMDataBase {
 //	@Getter
 //	List<Account> accounts = new ArrayList<>();
 	@Getter
-	List<Author> authors = Arrays.asList(new Author(1, "FA1", "LA1"),new Author(2, "FA2", "LA2"),new Author(3, "FA3", "LA3"),new Author(4, "FA4", "LA4"));
+	List<Author> authors = Arrays.asList(new Author(1, "FAa", "LAa"), new Author(2, "FAb", "LAb"),
+			new Author(3, "FAc", "LAc"), new Author(4, "FAd", "LAd"));
 	@Getter
 	List<Client> clients = new ArrayList<>();
 	@Getter
 	List<AccountingRecord> accountingRecords = new ArrayList<>();
 	@Getter
-	List<Book> books = Arrays.asList(new Book(1,"B1",new Category("C1","C1 description"),true, Arrays.asList(authors.get(0), authors.get(1))),new Book(2,"B2",new Category("C2","C2 description"),true, Arrays.asList(authors.get(2), authors.get(3))));
+	List<Category> categories = Arrays.asList(new Category("C1", "C1 description"),
+			new Category("C2", "C2 description"));
+	@Getter
+	List<Book> books = Arrays.asList(
+			new Book(1, "B1", categories.get(0), true, Arrays.asList(authors.get(0), authors.get(1))),
+			new Book(2, "B2", categories.get(1), true, Arrays.asList(authors.get(2), authors.get(3))));
 
 	static final OMDataBase instance = new OMDataBase();
 
