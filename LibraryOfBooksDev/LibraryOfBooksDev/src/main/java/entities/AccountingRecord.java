@@ -36,4 +36,17 @@ public class AccountingRecord implements Editable {
 		this.returnDate = (Date) ar.returnDate.clone();
 		this.statusId = ar.statusId;
 	}
+
+	@Override
+	public String toString() {
+		return new String("" + id + "\t" + "accountId: " + accountId + "\t" + "bookId: " + bookId + "\t"
+				+ "receiptDate: " + receiptDate.toString() + "\t" + "returnDate: " + returnDate.toString() + "\t"
+				+ "statusId: " + statusId.getValue());
+	}
+	
+	public StatusAR getStatusId() {
+		if(this.returnDate.getTime() <= new Date().getTime())
+			statusId = StatusAR.CLOSED;
+		return this.statusId;
+	}
 }

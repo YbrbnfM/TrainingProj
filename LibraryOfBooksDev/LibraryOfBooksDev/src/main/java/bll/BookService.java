@@ -20,12 +20,7 @@ public class BookService {
 	public void create(@NonNull Book c) throws IllegalArgumentException/* throws DuplicateParameterException */ {
 		if (c.getCategory() == null || c.getAuthors().size() == 0)
 			throw new IllegalArgumentException("Not all data is filled");
-		// clientRepositorable.create(c);
-//		if (bookRepositorable.get(x -> x.getName() == c.getName() && x.getCategoryId() == c.getCategoryId()
-//				&& x.getAuthors().containsAll(c.getAuthors())).isEmpty()) // проверить выполнение последнего условия
 		bookRepositorable.create(c);
-//		else
-//			throw new DuplicateParameterException("Such book is already exist");
 	}
 
 	public void update(@NonNull Book c) throws IllegalArgumentException {

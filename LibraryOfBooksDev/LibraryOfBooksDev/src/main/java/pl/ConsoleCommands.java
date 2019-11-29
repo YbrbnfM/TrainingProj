@@ -5,7 +5,11 @@ import java.util.NoSuchElementException;
 import lombok.Getter;
 
 public enum ConsoleCommands {
-	EXIT("\\exit"), BACK("\\back"), HELP("\\help");
+	EXIT("\\exit"),
+	BACK("\\back"),
+	HELP("\\help"),
+	CLIENTS("\\clients"),
+	ACCOUNTING_RECORDS("\\ars");
 
 	@Getter
 	final String value;

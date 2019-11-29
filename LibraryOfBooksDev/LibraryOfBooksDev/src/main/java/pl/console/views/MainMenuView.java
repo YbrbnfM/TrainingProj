@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import pl.ViewEnum;
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MainMenuView extends ConsoleView {
 	@Override
-	public	void onLoad() {
-		//super.onLoad();
-		messages = Arrays.asList(ViewEnum.values()).stream().skip(1).map(x->new String(x.getValue().getKey()+" "+x.getValue().getValue())).collect(Collectors.toList());
+	public void onLoad() {
+		messages = Arrays.asList(ViewEnum.values()).stream().skip(1)
+				.map(x -> new String(x.getValue().getKey() + " " + x.getValue().getValue()))
+				.collect(Collectors.toList());
 	}
 
 	@Override

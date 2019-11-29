@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import pl.ConsoleCommands;
 import pl.ViewEnum;
+import pl.controllers.AccountingRecordController;
+import pl.controllers.ClientController;
 
 @FieldDefaults(level = AccessLevel.PROTECTED)
 public abstract class ConsoleView {
@@ -46,6 +50,12 @@ public abstract class ConsoleView {
 			case HELP:
 				// прописать инструкцию
 				break;
+			case CLIENTS:
+				messages = new ClientController().get(x -> true).stream().map(x -> x.toString()).collect(Collectors.toList());
+				break;
+			case ACCOUNTING_RECORDS:
+				messages = new AccountingRecordController().get(x -> true).stream().map(x -> x.toString()).collect(Collectors.toList());
+				break;
 			case BACK:
 				if (link != null)
 					isStoped = true;
@@ -53,7 +63,7 @@ public abstract class ConsoleView {
 					System.out.println("Невозможно вернуться к предыдущему представлению");
 			}
 		} catch (NoSuchElementException e) {
-			System.out.println("Некоректный входные данные");
+			System.out.println("Некоректные входные данные");
 		}
 	}
 }

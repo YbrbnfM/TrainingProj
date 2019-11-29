@@ -12,18 +12,19 @@ import entities.Account;
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Author extends Account {
 	public Author(int id, @NonNull String firstname, @NonNull String lastname) {
-		super(id,firstname,lastname);
+		super(id, firstname, lastname);
 	}
+
 	@IsReplicate
 	public Author(@NonNull Author a) {
 		super(a);
 	}
-	
+
 	@Override
 	public String toString() {
-		return new String("id: "+id+"\t"+firstname+" "+lastname);
+		return new String("id: " + id + "\t" + firstname + " " + lastname);
 	}
 }

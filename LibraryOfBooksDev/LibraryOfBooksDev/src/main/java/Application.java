@@ -1,5 +1,4 @@
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
@@ -11,18 +10,20 @@ public class Application {
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		//List<Class> views = new ArrayList<>(); //переделать: считать классы из пакета views
+		// List<Class> views = new ArrayList<>(); //переделать: считать классы из пакета
+		// views
 		ConsoleView currentView = new MainMenuView();
 		currentView.onLoad();
-		while (currentView.getLink()!=null || !currentView.isStoped()) {
-			//currentView.onLoad();
+		while (currentView.getLink() != null || !currentView.isStoped()) {
 			currentView.render();
 			currentView.onRun();
-			if(currentView.getLink()!=null && currentView.isStoped()) {
+			if (currentView.getLink() != null && currentView.isStoped()) {
 				try {
 					Class<ConsoleView> c = (Class<ConsoleView>) currentView.getClass();
-					ViewEnum newLink = Arrays.asList(ViewEnum.values()).stream().filter(x->x.getValue().getValue2().equals(c)).findAny().get();
-					currentView = (ConsoleView) currentView.getLink().getValue().getValue2().getDeclaredConstructor().newInstance();
+					ViewEnum newLink = Arrays.asList(ViewEnum.values()).stream()
+							.filter(x -> x.getValue().getValue2().equals(c)).findAny().get();
+					currentView = (ConsoleView) currentView.getLink().getValue().getValue2().getDeclaredConstructor()
+							.newInstance();
 					currentView.setLink(newLink);
 					currentView.onLoad();
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException

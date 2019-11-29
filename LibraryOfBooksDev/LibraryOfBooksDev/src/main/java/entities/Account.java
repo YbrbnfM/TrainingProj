@@ -20,6 +20,7 @@ public abstract class Account {
 	String firstname;
 	@NonNull
 	String lastname;
+
 	@IsReplicate
 	public Account(@NonNull Account a) {
 		this.firstname = a.firstname;

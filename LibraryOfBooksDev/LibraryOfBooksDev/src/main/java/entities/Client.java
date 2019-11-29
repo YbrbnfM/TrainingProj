@@ -33,4 +33,10 @@ public class Client extends Account implements Editable {
 		this.accountingRecords = c.accountingRecords.stream().map(x -> new AccountingRecord(x))
 				.collect(Collectors.toList());
 	}
+	
+	@Override
+	public String toString() {
+		return new String("" + id + "\t" + "firstname: " + firstname + "\t" + "lastname: " + lastname + "\t" + "ARs: "
+				+ accountingRecords.stream().map(x -> x.getId()+"").reduce((x, y) -> x + ", " + y).get());
+	}
 }

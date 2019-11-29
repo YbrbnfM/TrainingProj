@@ -11,7 +11,7 @@ import entities.Client;
 import lombok.NonNull;
 
 public class ClientRepositoryOM implements Repositorable<Client> {
-	//private final Logger log = LogManager.getLogger();
+	// private final Logger log = LogManager.getLogger();
 	private OMDataBase db = OMDataBase.getInstance();
 	private List<Client> cachedLink = db.getClients();
 
@@ -47,13 +47,7 @@ public class ClientRepositoryOM implements Repositorable<Client> {
 
 	@Override
 	public void update(@NonNull Client element) throws NoSuchElementException {
-		// db.update(element, cachedLink);
-//		try {
 		Client findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
 		cachedLink.set(cachedLink.indexOf(findedElement), element);
-//		} catch (NoSuchElementException nsee) {
-//			cachedLink.add(element);
-//			log.warn("Updated element does not exist, but was re-created");
-//		}
 	}
 }

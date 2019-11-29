@@ -27,7 +27,6 @@ public class AccountService {
 	Repositorable<Book> bookRepositorable = (Repositorable<Book>) Repositories.BOOK_REPOSITOTY.getValue();
 
 	public void create(@NonNull Client c) throws DuplicateParameterException {
-		// clientRepositorable.create(c);
 		if (clientRepositorable.get(x -> x.getFirstname() == c.getFirstname() && x.getLastname() == c.getLastname())
 				.isEmpty())
 			clientRepositorable.create(c);

@@ -27,21 +27,17 @@ public class SearchingBookView extends ConsoleView {
 		List<Book> books;
 		try {
 			books = findBooks(mes);
-			if(!books.isEmpty())
+			if (!books.isEmpty())
 				messages = books.stream().map(x -> x.toString()).collect(Collectors.toList());
 			else
 				messages = Arrays.asList("По заданным критериям книги не найдены");
 		} catch (IllegalArgumentException e) {
-			//System.out.println(e.getMessage());
 			super.onRun();
-			// return;
 		}
-
-		// super.onRun();
 	}
 
 	private List<Book> findBooks(String mes) throws IllegalArgumentException {
-		List<String> criterials = parseMes(mes);// = Arrays.asList("","","");
+		List<String> criterials = parseMes(mes);
 		List<String> fNames = new ArrayList<>();
 		List<String> lNames = new ArrayList<>();
 		if (!criterials.get(2).isBlank()) {
