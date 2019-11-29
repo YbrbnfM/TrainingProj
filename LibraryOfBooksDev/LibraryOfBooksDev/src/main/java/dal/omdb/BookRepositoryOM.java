@@ -6,16 +6,12 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import dal.Repositorable;
 import entities.Book;
 import lombok.NonNull;
 
 public class BookRepositoryOM implements Repositorable<Book> {
-	private final Logger log = LogManager.getLogger();
+	//private final Logger log = LogManager.getLogger();
 	private OMDataBase db = OMDataBase.getInstance();
 	private List<Book> cachedLink = db.getBooks();
 

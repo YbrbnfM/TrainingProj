@@ -79,7 +79,7 @@ public class BookController implements Controller<Book> {
 				continue;
 			}
 			if (tmp[0].equalsIgnoreCase("category")) {
-				String[] argsC = tmp[i].split(",");
+				String[] argsC = tmp[1].split(",");
 				// Category c;
 				if (argsC.length != 2)
 					throw new IllegalArgumentException("Некорректные входные данные");
@@ -107,13 +107,13 @@ public class BookController implements Controller<Book> {
 				if (tmpAs.length == 0)
 					throw new IllegalArgumentException("Некорректные входные данные");
 				for (int j = 0; j < tmpAs.length; j++) {
-					String[] tmpA = args[i].split(",");
+					String[] tmpA = tmpAs[j].split(",");
 					Author a = new Author();
 					if (tmpA.length != 2)
 						throw new IllegalArgumentException("Некорректные входные данные");
 					for (int k = 0; k < tmpA.length; k++) {
 						if (tmpA[k].matches("[A-Za-zА-Яа-я]+--[A-Za-zА-Яа-я]+")) {
-							String[] tmpAF = tmpA[i].split("--");
+							String[] tmpAF = tmpA[k].split("--");
 							if (tmpAF[0].equalsIgnoreCase("firstname")) {
 								a.setFirstname(tmpAF[1]);
 								continue;
@@ -152,7 +152,7 @@ public class BookController implements Controller<Book> {
 				continue;
 			}
 			if (tmp[0].equalsIgnoreCase("category")) {
-				String[] argsC = tmp[i].split(",");
+				String[] argsC = tmp[1].split(",");
 				// Category c;
 				if (argsC.length != 2)
 					throw new IllegalArgumentException("Некорректные входные данные");
@@ -180,13 +180,13 @@ public class BookController implements Controller<Book> {
 				if (tmpAs.length == 0)
 					throw new IllegalArgumentException("Некорректные входные данные");
 				for (int j = 0; j < tmpAs.length; j++) {
-					String[] tmpA = args[i].split(",");
+					String[] tmpA = tmpAs[j].split(",");
 					Author a = new Author();
 					if (tmpA.length != 2)
 						throw new IllegalArgumentException("Некорректные входные данные");
 					for (int k = 0; k < tmpA.length; k++) {
 						if (tmpA[k].matches("[A-Za-zА-Яа-я]+--[A-Za-zА-Яа-я]+")) {
-							String[] tmpAF = tmpA[i].split("--");
+							String[] tmpAF = tmpA[k].split("--");
 							if (tmpAF[0].equalsIgnoreCase("firstname")) {
 								a.setFirstname(tmpAF[1]);
 								continue;

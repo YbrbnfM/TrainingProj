@@ -18,9 +18,7 @@ import lombok.experimental.FieldDefaults;
 public class AccountingRecord implements Editable {
 	@Setter(AccessLevel.PRIVATE)
 	int id;
-	@Setter(AccessLevel.PRIVATE)
 	int accountId;
-	@Setter(AccessLevel.PRIVATE)
 	int bookId;
 	@NonNull
 	Date receiptDate;

@@ -27,8 +27,9 @@ public class AccountService {
 	Repositorable<Book> bookRepositorable = (Repositorable<Book>) Repositories.BOOK_REPOSITOTY.getValue();
 
 	public void create(@NonNull Client c) throws DuplicateParameterException {
-		//clientRepositorable.create(c);
-		if(clientRepositorable.get(x->x.getFirstname()==c.getFirstname()&&x.getLastname()==c.getLastname()).isEmpty())
+		// clientRepositorable.create(c);
+		if (clientRepositorable.get(x -> x.getFirstname() == c.getFirstname() && x.getLastname() == c.getLastname())
+				.isEmpty())
 			clientRepositorable.create(c);
 		else
 			throw new DuplicateParameterException("Client whith this names is already exist");
@@ -88,9 +89,12 @@ public class AccountService {
 		if (ar.getReceiptDate().getTime() >= ar.getReturnDate().getTime()
 				|| ar.getReturnDate().getTime() <= new Date().getTime())
 			throw new IllegalArgumentException("now/receiptDate >= returnDate");
-		if (!arRepositorable.get(x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId()&&x.getStatusId()==StatusAR.OPENED).isEmpty())
+		if (!arRepositorable.get(
+				x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId() && x.getStatusId() == StatusAR.OPENED)
+				.isEmpty())
 			throw new DuplicateParameterException("Such accountRecord is already exist");
-		if(!arRepositorable.get(x->x.getBookId()==b.getId()).isEmpty())
+		if (arRepositorable.get(x -> x.getBookId() == b.getId()).stream()
+				.filter(x -> x.getStatusId() == StatusAR.OPENED).findAny().isPresent())
 			throw new IllegalArgumentException("This book is not free");
 		arRepositorable.create(ar);
 	}
@@ -113,9 +117,12 @@ public class AccountService {
 		if (ar.getReceiptDate().getTime() >= ar.getReturnDate().getTime()
 				|| ar.getReturnDate().getTime() <= new Date().getTime())
 			throw new IllegalArgumentException("now/receiptDate >= returnDate");
-		if (!arRepositorable.get(x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId()&&x.getStatusId()==StatusAR.OPENED).isEmpty())
+		if (!arRepositorable.get(
+				x -> x.getAccountId() == c.getId() && x.getBookId() == b.getId() && x.getStatusId() == StatusAR.OPENED)
+				.isEmpty())
 			throw new DuplicateParameterException("Such accountRecord is already exist");
-		if(!arRepositorable.get(x->x.getBookId()==b.getId()).isEmpty())
+		if (arRepositorable.get(x -> x.getBookId() == b.getId()).stream()
+				.filter(x -> x.getStatusId() == StatusAR.OPENED).findAny().isPresent())
 			throw new IllegalArgumentException("This book is not free");
 		try {
 			arRepositorable.update(ar);

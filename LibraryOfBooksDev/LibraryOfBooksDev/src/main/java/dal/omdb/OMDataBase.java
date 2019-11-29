@@ -1,5 +1,6 @@
 package dal.omdb;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,9 +31,9 @@ public class OMDataBase {
 	List<Category> categories = Arrays.asList(new Category("C1", "C1 description"),
 			new Category("C2", "C2 description"));
 	@Getter
-	List<Book> books = Arrays.asList(
-			new Book(1, "B1", categories.get(0), true, Arrays.asList(authors.get(0), authors.get(1))),
-			new Book(2, "B2", categories.get(1), true, Arrays.asList(authors.get(2), authors.get(3))));
+	List<Book> books = new ArrayList<>(
+			Arrays.asList(new Book(1, "B1", categories.get(0), true, Arrays.asList(authors.get(0), authors.get(1))),
+					new Book(2, "B2", categories.get(1), true, Arrays.asList(authors.get(2), authors.get(3)))));
 
 	static final OMDataBase instance = new OMDataBase();
 
@@ -42,10 +43,21 @@ public class OMDataBase {
 
 	public <T> void generateId(T o) {
 		try {
-			o.getClass().getDeclaredField("id").setInt(o, idObject++);
+			Field f = o.getClass().getDeclaredField("id");
+			f.setAccessible(true);
+			f.setInt(o, idObject++);
+			f.setAccessible(false);
 		} catch (IllegalAccessException | NoSuchFieldException e) {
-			e.printStackTrace();
-			throw new IllegalArgumentException("Not found or not access to the field \"id\"");
+			try {
+				Field f = o.getClass().getSuperclass().getDeclaredField("id");
+				f.setAccessible(true);
+				f.setInt(o, idObject++);
+				f.setAccessible(false);
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
+				e1.printStackTrace();
+				e.printStackTrace();
+				throw new IllegalArgumentException("Not found or not access to the field \"id\"");
+			}
 		}
 	}
 

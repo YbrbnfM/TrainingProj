@@ -45,7 +45,7 @@ public class EditView extends ConsoleView {
 				case BOOKS:
 					con = new BookController();
 					System.out.println(
-							"Пример создания: name:example category:id-example,description-example authors:firstname-example,lastname-example;...");
+							"Пример создания: name:example category:id--example,description--example authors:firstname--example,lastname--example;...");
 					break;
 				case ACCOUNTING_RECORDS:
 					con = new AccountingRecordController();
@@ -64,10 +64,18 @@ public class EditView extends ConsoleView {
 				int keyCommand = Integer.parseInt(mes);
 				switch (EditingCommands.getByKey(keyCommand)) {
 				case CREATE:
-					con.post(in.nextLine());
+					if (con.getClass() == AccountingRecordController.class)
+						System.out.println("Для работы с учетными записями используйте представление \"Выдача книг\""
+								+ "\n В текущем возможно только удалить(закрыть учетную запись)");
+					else
+						con.post(in.nextLine());
 					break;
 				case EDIT:
-					con.put(in.nextLine());
+					if (con.getClass() == AccountingRecordController.class)
+						System.out.println("Для работы с учетными записями используйте представление \"Выдача книг\""
+								+ "\n В текущем возможно только удалить(закрыть учетную запись)");
+					else
+						con.put(in.nextLine());
 					break;
 				case DELETE:
 					con.delete(Integer.parseInt(in.nextLine()));

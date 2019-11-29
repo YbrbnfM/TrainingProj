@@ -6,16 +6,12 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import dal.Repositorable;
 import entities.AccountingRecord;
 import lombok.NonNull;
 
 public class AccountingRecordRepositoryOM implements Repositorable<AccountingRecord> {
-	private final Logger log = LogManager.getLogger();
+	//private final Logger log = LogManager.getLogger();
 	private OMDataBase db = OMDataBase.getInstance();
 	private List<AccountingRecord> cachedLink = db.getAccountingRecords();
 
@@ -26,7 +22,7 @@ public class AccountingRecordRepositoryOM implements Repositorable<AccountingRec
 
 	@Override
 	public List<AccountingRecord> get(@NonNull Predicate<AccountingRecord> p) {
-		return cachedLink.stream().filter(p).map(x->new AccountingRecord(x)).collect(Collectors.toList());
+		return cachedLink.stream().filter(p).map(x -> new AccountingRecord(x)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -53,9 +49,8 @@ public class AccountingRecordRepositoryOM implements Repositorable<AccountingRec
 	public void update(@NonNull AccountingRecord element) throws NoSuchElementException {
 		// db.update(element, db.getAccountingRecords());
 //		try {
-			AccountingRecord findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny()
-					.get();
-			cachedLink.set(cachedLink.indexOf(findedElement), element);
+		AccountingRecord findedElement = cachedLink.stream().filter(x -> x.getId() == element.getId()).findAny().get();
+		cachedLink.set(cachedLink.indexOf(findedElement), element);
 //		} catch (NoSuchElementException nsee) {
 //			cachedLink.add(element);
 //			log.warn("Updated element does not exist, but was re-created");
