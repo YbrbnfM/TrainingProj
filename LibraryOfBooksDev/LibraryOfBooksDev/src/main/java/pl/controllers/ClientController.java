@@ -20,7 +20,7 @@ public class ClientController implements Controller<Client> {
 		try {
 			return as.get(id);
 		} catch (Exception e) {
-			throw new NoSuchElementException("Not found");
+			throw new NoSuchElementException("Не найдено");
 		}
 	}
 
@@ -30,7 +30,7 @@ public class ClientController implements Controller<Client> {
 		try {
 			return as.get((Predicate<Client>) p);
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Invalid filter");
+			throw new IllegalArgumentException("Неверный фильтр");
 		}
 	}
 

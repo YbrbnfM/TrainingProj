@@ -26,6 +26,7 @@ public class MainMenuView extends ConsoleView {
 					.get();
 			isStoped = true;
 		} catch (NumberFormatException e) {
+			exc = e;
 			super.onRun();
 		} catch (NoSuchElementException e) {
 			System.out.println("No such element in menu");

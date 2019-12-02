@@ -27,6 +27,7 @@ public abstract class ConsoleView {
 	List<String> messages;
 	@Getter
 	boolean isStoped = false;
+	Exception exc;
 
 	public void onLoad() {
 		//in = new Scanner(System.in);
@@ -63,6 +64,11 @@ public abstract class ConsoleView {
 					System.out.println("Невозможно вернуться к предыдущему представлению");
 			}
 		} catch (NoSuchElementException e) {
+			if(exc!=null)
+				if(exc.getMessage()!=null) {
+					System.out.println(exc.getMessage());
+					return;
+				}
 			System.out.println("Некоректные входные данные");
 		}
 	}

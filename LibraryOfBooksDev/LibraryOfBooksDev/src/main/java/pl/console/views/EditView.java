@@ -57,6 +57,7 @@ public class EditView extends ConsoleView {
 				messages = Arrays.asList(EditingCommands.values()).stream().map(x -> x.getValue().toString())
 						.collect(Collectors.toList());
 			} catch (NoSuchElementException | IllegalArgumentException e) {
+				exc = e;
 				super.onRun();
 			}
 		else {
@@ -85,6 +86,7 @@ public class EditView extends ConsoleView {
 					return;
 				}
 			} catch (IllegalArgumentException e) {
+				exc = e;
 				super.onRun();
 			}
 		}

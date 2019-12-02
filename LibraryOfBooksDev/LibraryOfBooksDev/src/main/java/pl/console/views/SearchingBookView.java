@@ -32,6 +32,7 @@ public class SearchingBookView extends ConsoleView {
 			else
 				messages = Arrays.asList("По заданным критериям книги не найдены");
 		} catch (IllegalArgumentException e) {
+			exc = e;
 			super.onRun();
 		}
 	}
@@ -64,7 +65,7 @@ public class SearchingBookView extends ConsoleView {
 		return x.getName().equals(name);
 	}
 
-	private boolean matchIdA(Book x, String ids) {
+	private boolean matchIdA(Book x, String ids) throws IllegalArgumentException {
 		try {
 			int id = Integer.parseInt(ids);
 			return x.getAuthors().stream().filter(y -> y.getId() == id).findAny().isPresent();

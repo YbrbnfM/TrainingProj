@@ -21,6 +21,7 @@ public class AccountingRecordView extends ConsoleView {
 		try {
 			arc.post(mes);
 		} catch (IllegalArgumentException e) {
+			exc = e;
 			super.onRun();
 		}
 	}

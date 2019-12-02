@@ -23,7 +23,7 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			return as.getRecords(x -> x.getId() == id).get(0);
 		} catch (Exception e) {
-			throw new NoSuchElementException("Not found");
+			throw new NoSuchElementException("Не найдено");
 		}
 	}
 
@@ -33,7 +33,7 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			return as.getRecords((Predicate<AccountingRecord>) p);
 		} catch (Exception e) {
-			throw new NoSuchElementException("Invalid filter");
+			throw new NoSuchElementException("Неверный фильтр");
 		}
 	}
 
@@ -43,9 +43,9 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			as.updateAccountRecord(t);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Illegal sended data");
+			throw new IllegalArgumentException("Некоорректные входные данные");
 		} catch (DuplicateParameterException e) {
-			throw new IllegalArgumentException(e.getMessage());
+			throw new IllegalArgumentException("Текущий экземпляр уже существует");
 		}
 	}
 
@@ -54,17 +54,22 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			as.createAccountingRecord(t);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Illegal sended data");
+			throw new IllegalArgumentException("Некоорректные входные данные");
 		} catch (DuplicateParameterException e) {
-			throw new IllegalArgumentException(e.getMessage());
+			throw new IllegalArgumentException("Текущий экземпляр уже существует");
 		}
 	}
 
 	@Override
-	public void delete(int id) throws IllegalArgumentException, NoSuchElementException {
-		AccountingRecord ar = this.get(id);
-		ar.setStatusId(StatusAR.CLOSED);
-		this.put(ar);
+	public void delete(int id) {
+		try {
+			AccountingRecord ar = this.get(id);
+			ar.setStatusId(StatusAR.CLOSED);
+			this.put(ar);
+
+		} catch (NoSuchElementException e) {
+			// Ничего не делать
+		}
 	}
 
 	@Override
@@ -74,7 +79,7 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			as.updateAccountRecord(ar);
 		} catch (DuplicateParameterException e) {
-			throw new IllegalArgumentException("Некооректные входные данные");
+			throw new IllegalArgumentException("Текущий экземпляр уже существует");
 		}
 	}
 
@@ -86,7 +91,7 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		try {
 			as.createAccountingRecord(ar);
 		} catch (DuplicateParameterException e) {
-			throw new IllegalArgumentException("Некооректные входные данные");
+			throw new IllegalArgumentException("Текущий экземпляр уже существует");
 		}
 	}
 

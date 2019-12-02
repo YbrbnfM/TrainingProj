@@ -19,7 +19,7 @@ public class BookController implements Controller<Book> {
 		try {
 			return bs.get(id);
 		} catch (Exception e) {
-			throw new NoSuchElementException("Not found");
+			throw new NoSuchElementException("Не найдено");
 		}
 	}
 
@@ -29,7 +29,7 @@ public class BookController implements Controller<Book> {
 		try {
 			return bs.get((Predicate<entities.Book>) p);
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Invalid filter");
+			throw new IllegalArgumentException("Неверный фильтр");
 		}
 
 	}
@@ -44,7 +44,7 @@ public class BookController implements Controller<Book> {
 		try {
 			bs.create(t);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Illegal sended data");
+			throw new IllegalArgumentException("Некорректные входные данные");
 		}
 	}
 
@@ -52,8 +52,8 @@ public class BookController implements Controller<Book> {
 	public void delete(int id) throws NoSuchElementException {
 		try {
 			bs.delete(id);
-		} catch (NoSuchElementException e) {
-			throw new NoSuchElementException("Such book was not found");
+		} catch (NoSuchElementException e) {		
+			// Ничего не делать		
 		}
 	}
 
