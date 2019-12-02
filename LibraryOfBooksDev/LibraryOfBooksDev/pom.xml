@@ -17,7 +17,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>Application</mainClass>
+							<mainClass>com.libraryofbooks.Application</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
