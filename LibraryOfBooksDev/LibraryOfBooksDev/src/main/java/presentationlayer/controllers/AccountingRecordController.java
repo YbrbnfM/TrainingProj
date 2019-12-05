@@ -96,6 +96,7 @@ public class AccountingRecordController implements Controller<AccountingRecord> 
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private AccountingRecord parseRequestString(@NonNull String s, int count) throws IllegalArgumentException {
 		AccountingRecord ar = new AccountingRecord();
 		String[] args = s.split(" ");

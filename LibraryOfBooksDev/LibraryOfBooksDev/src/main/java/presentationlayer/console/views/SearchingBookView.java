@@ -18,7 +18,7 @@ public class SearchingBookView extends ConsoleView {
 	public void onLoad() {
 		super.onLoad();
 		messages.add("Использовать следующие флаги для поиска книг:\n" + "\\n - по названию (\\n название_книги)"
-				+ "\n\\a - по автору (\\a first_name last_name, first_name1 last_name1),(\\a [id_автора])");
+				+ "\n\\a - по автору (\\a first_name last_name, first_namee last_namee),(\\a [id_автора])");
 	}
 
 	@Override

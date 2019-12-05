@@ -25,7 +25,9 @@ public class EditView extends ConsoleView {
 	public void onLoad() {
 		super.onLoad();
 		messages.add("Режим редактирования. Доступные сущности для редактирования: клиенты, книги и учетные записи"
-				+ "\nПри заполнении данных нужные поля прописывать ввиде имя:значение (имя1:значение1 имя2:значение2)");
+				+ "Вводить данные необходимо в соответствии с указанным в примере форматом"
+				+ "\nИзменение существующих учетных записей запрещено, удаление производится только при удалении связанной пользователя/книги,"
+				+ "\n в ином случае происходит смена состояния на закрытый, добавление ");
 		messages.addAll(Arrays.asList(EditableEntities.values()).stream().map(x -> x.getValue().toString())
 				.collect(Collectors.toList()));
 	}
@@ -40,7 +42,7 @@ public class EditView extends ConsoleView {
 				switch (EditableEntities.getByKey(keyCommand)) {
 				case CLIENTS:
 					con = new ClientController();
-					System.out.println("Пример создания: firstname:example lastname:example1");
+					System.out.println("Пример создания: firstname:example lastname:examplee");
 					break;
 				case BOOKS:
 					con = new BookController();

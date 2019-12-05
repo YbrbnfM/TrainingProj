@@ -30,14 +30,14 @@ public abstract class ConsoleView {
 	Exception exc;
 
 	public void onLoad() {
-		//in = new Scanner(System.in);
+		// in = new Scanner(System.in);
 		// model = new DefaultModel();
 		messages = new ArrayList<>();
-		//isStoped = false;
+		// isStoped = false;
 	}
 
 	public void render() {
-		for(int i = 0;i<messages.size();i++)
+		for (int i = 0; i < messages.size(); i++)
 			System.out.println(messages.get(i));
 	}
 
@@ -49,13 +49,22 @@ public abstract class ConsoleView {
 				link = null;
 				break;
 			case HELP:
-				// прописать инструкцию
+				System.out.println("Доступные команды: " + ConsoleCommands.EXIT.getValue() + "\t-выход\n"
+						+ ConsoleCommands.BACK.getValue() + "\t-вернуться на предыдущее представление\n"
+						+ ConsoleCommands.CLIENTS.getValue() + " и " + ConsoleCommands.ACCOUNTING_RECORDS.getValue()
+						+ "\t-для вывода указанных сущностей соответственно, т.к. для них не отведено специальное представление");
 				break;
 			case CLIENTS:
-				messages = new ClientController().get(x -> true).stream().map(x -> x.toString()).collect(Collectors.toList());
+				messages = new ClientController().get(x -> true).stream().map(x -> x.toString())
+						.collect(Collectors.toList());
+				if(messages.isEmpty())
+					System.out.println("Записи отсутствуют");
 				break;
 			case ACCOUNTING_RECORDS:
-				messages = new AccountingRecordController().get(x -> true).stream().map(x -> x.toString()).collect(Collectors.toList());
+				messages = new AccountingRecordController().get(x -> true).stream().map(x -> x.toString())
+						.collect(Collectors.toList());
+				if(messages.isEmpty())
+					System.out.println("Записи отсутствуют");
 				break;
 			case BACK:
 				if (link != null)
@@ -64,8 +73,8 @@ public abstract class ConsoleView {
 					System.out.println("Невозможно вернуться к предыдущему представлению");
 			}
 		} catch (NoSuchElementException e) {
-			if(exc!=null)
-				if(exc.getMessage()!=null) {
+			if (exc != null)
+				if (exc.getMessage() != null) {
 					System.out.println(exc.getMessage());
 					return;
 				}
